@@ -2576,9 +2576,16 @@ function library:init()
                             self.bind = (keybind and keybind) or keybind or self.bind
                             if self.bind == Enum.KeyCode.Backspace then
                                 self.bind = 'none';
+                                bind.state = true
+                                if bind.flag then
+                                    library.flags[bind.flag] = bind.state;
+                                end
                                 self.callback(true)
                             else
                                 keyName = keyNames[keybind] or keybind.Name or keybind
+                            end
+                            if self.bind ~= 'none' then
+                                self.callback(false)
                             end
                             self.keycallback(self.bind);
                             self:SetKeyText(keyName:upper());
