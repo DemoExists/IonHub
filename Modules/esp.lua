@@ -476,9 +476,13 @@ do -- Player Metatable
                     Healthbar.Visible = false
                     Healthbar_Outline.Visible = false
                     Name.Visible = false
+                    NameBold.Visible = false
                     Distance.Visible = false
+                    DistanceBold.Visible = false
                     Tool.Visible = false
+                    ToolBold.Visible = false
                     Health.Visible = false
+                    HealthBold.Visible = false
                     --Chams.Enabled = false
                     return
                 end
