@@ -2585,6 +2585,8 @@ function library:init()
                                     library.flags[bind.flag] = bind.state;
                                 end
                                 self.callback(true)
+                                local display = bind.state; if bind.invertindicator then display = not bind.state; end
+                                bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             else
                                 keyName = keyNames[keybind] or keybind.Name or keybind
                             end
