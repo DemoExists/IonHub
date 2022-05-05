@@ -2523,6 +2523,10 @@ function library:init()
                         if bind.flag then
                             library.options[bind.flag] = bind;
                         end
+
+                        if bind.flag and bind.bind == 'none' then
+                            library.flags[bind.flag] = true;
+                        end
     
                         --- Create Objects ---
                         do
