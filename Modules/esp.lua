@@ -50,6 +50,7 @@ end
 local ESP = {
     Settings = {
         Enabled = false,
+        Bold_Text = false,
         Objects_Enabled = false,
         Team_Check = false,
         Improved_Visible_Check = false,
@@ -186,10 +187,10 @@ do -- Player Metatable
     function Player_Metatable:Update()
         local Box, Box_Outline = self.Components.Box, self.Components.Box_Outline
         local Healthbar, Healthbar_Outline = self.Components.Healthbar, self.Components.Healthbar_Outline
-        local Name = self.Components.Name
-        local Distance = self.Components.Distance
-        local Tool = self.Components.Tool
-        local Health = self.Components.Health
+        local Name, NameBold = self.Components.Name
+        local Distance, DistanceBold = self.Components.Distance
+        local Tool, ToolBold = self.Components.Tool
+        local Health, HealthBold = self.Components.Health
         local Chams = true--self.Components.Chams
         if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or Distance == nil or Tool == nil or Health == nil or Chams == nil then
             self:Destroy()
@@ -338,6 +339,11 @@ do -- Player Metatable
                     Name.OutlineColor = Name_Settings.OutlineColor
                     Name.Transparency = Framework:Drawing_Transparency(Name_Settings.Transparency)
                     Name.Visible = Name_Settings.Enabled
+                    NameBold.Color = Is_Highlighted and Highlight_Color or Name_Settings.Color
+                    NameBold.OutlineColor = Name_Settings.OutlineColor
+                    NameBold.Transparency = Framework:Drawing_Transparency(Name_Settings.Transparency)
+                    NameBold.Position = Name.Position + Vector2.new(1, 0)
+                    NameBold.Visible = ESP.Settings.Bold_Text
 
                     -- Distance
                     local Distance_Settings = ESP.Settings.Distance
@@ -368,6 +374,12 @@ do -- Player Metatable
                     Distance.OutlineColor = Distance_Settings.OutlineColor
                     Distance.Transparency = Framework:Drawing_Transparency(Distance_Settings.Transparency)
                     Distance.Visible = Distance_Settings.Enabled
+                    DistanceBold.Text = Meter_Distance.."m"
+                    DistanceBold.Color = Is_Highlighted and Highlight_Color or Distance_Settings.Color
+                    DistanceBold.OutlineColor = Distance_Settings.OutlineColor
+                    DistanceBold.Transparency = Framework:Drawing_Transparency(Distance_Settings.Transparency)
+                    DistanceBold.Position = Distance.Position + Vector2.new(1, 0)
+                    DistanceBold.Visible = ESP.Settings.Bold_Text
 
                     -- Tool
                     local Tool_Settings = ESP.Settings.Tool
@@ -398,6 +410,12 @@ do -- Player Metatable
                     Tool.OutlineColor = Tool_Settings.OutlineColor
                     Tool.Transparency = Framework:Drawing_Transparency(Tool_Settings.Transparency)
                     Tool.Visible = Tool_Settings.Enabled
+                    ToolBold.Text = ESP:Get_Tool(self.Player)
+                    ToolBold.Color = Is_Highlighted and Highlight_Color or Tool_Settings.Color
+                    ToolBold.OutlineColor = Tool_Settings.OutlineColor
+                    ToolBold.Transparency = Framework:Drawing_Transparency(Tool_Settings.Transparency)
+                    ToolBold.Position = Tool.Position + Vector2.new(1, 0)
+                    ToolBold.Visible = ESP.Settings.Bold_Text
 
                     -- Health
                     local Health_Settings = ESP.Settings.Health
@@ -428,6 +446,12 @@ do -- Player Metatable
                     Health.OutlineColor = Health_Settings.OutlineColor
                     Health.Transparency = Framework:Drawing_Transparency(Health_Settings.Transparency)
                     Health.Visible = Health_Settings.Enabled
+                    HealthBold.Text = tostring(math.floor(Current_Health + 0.5))
+                    HealthBold.Color = Health_Lerp_Color
+                    HealthBold.OutlineColor = Health_Settings.OutlineColor
+                    HealthBold.Transparency = Framework:Drawing_Transparency(Health_Settings.Transparency)
+                    HealthBold.Position = Health.Position + Vector2.new(1, 0)
+                    HealthBold.Visible = ESP.Settings.Bold_Text
 
                     -- Chams
                     --[[
@@ -537,9 +561,13 @@ do -- ESP Functions
         Components.Healthbar = Framework:Draw("Square", {Thickness = 1, ZIndex = 2, Filled = true})
         Components.Healthbar_Outline = Framework:Draw("Square", {Thickness = 3, ZIndex = 1, Filled = true})
         Components.Name = Framework:Draw("Text", {Text = Instance.Name, Font = 2, Size = 13, Outline = true, Center = true})
+        Components.NameBold = Framework:Draw("Text", {Text = Instance.Name, Font = 2, Size = 13, Outline = true, Center = true})
         Components.Distance = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
+        Components.DistanceBold = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
         Components.Tool = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
+        Components.ToolBold = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
         Components.Health = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
+        Components.HealthBold = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
         --Components.Chams = Framework:Instance("Highlight", {Parent = CoreGui, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop})
         self.Objects[Instance] = Object
         return Object
