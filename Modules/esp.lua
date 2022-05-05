@@ -192,7 +192,7 @@ do -- Player Metatable
         local Tool, ToolBold = self.Components.Tool, self.Components.ToolBold
         local Health, HealthBold = self.Components.Health, self.Components.HealthBold
         local Chams = true--self.Components.Chams
-        if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or Distance == nil or Tool == nil or Health == nil or Chams == nil then
+        if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or NameBold == nil or Distance == nil or DistanceBold == nil or Tool == nil or ToolBold == nil or Health == nil or HealthBold == nil or Chams == nil then
             self:Destroy()
         end
         local Character = ESP:Get_Character(self.Player)
