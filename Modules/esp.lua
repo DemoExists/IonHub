@@ -343,7 +343,7 @@ do -- Player Metatable
                     NameBold.OutlineColor = Name_Settings.OutlineColor
                     NameBold.Transparency = Framework:Drawing_Transparency(Name_Settings.Transparency)
                     NameBold.Position = Name.Position + Vector2.new(1, 0)
-                    NameBold.Visible = ESP.Settings.Bold_Text
+                    NameBold.Visible = Name.Visible and ESP.Settings.Bold_Text
 
                     -- Distance
                     local Distance_Settings = ESP.Settings.Distance
@@ -379,7 +379,7 @@ do -- Player Metatable
                     DistanceBold.OutlineColor = Distance_Settings.OutlineColor
                     DistanceBold.Transparency = Framework:Drawing_Transparency(Distance_Settings.Transparency)
                     DistanceBold.Position = Distance.Position + Vector2.new(1, 0)
-                    DistanceBold.Visible = ESP.Settings.Bold_Text
+                    DistanceBold.Visible = Distance.Visible and ESP.Settings.Bold_Text
 
                     -- Tool
                     local Tool_Settings = ESP.Settings.Tool
@@ -415,7 +415,7 @@ do -- Player Metatable
                     ToolBold.OutlineColor = Tool_Settings.OutlineColor
                     ToolBold.Transparency = Framework:Drawing_Transparency(Tool_Settings.Transparency)
                     ToolBold.Position = Tool.Position + Vector2.new(1, 0)
-                    ToolBold.Visible = ESP.Settings.Bold_Text
+                    ToolBold.Visible = Tool.Visible and ESP.Settings.Bold_Text
 
                     -- Health
                     local Health_Settings = ESP.Settings.Health
@@ -451,7 +451,7 @@ do -- Player Metatable
                     HealthBold.OutlineColor = Health_Settings.OutlineColor
                     HealthBold.Transparency = Framework:Drawing_Transparency(Health_Settings.Transparency)
                     HealthBold.Position = Health.Position + Vector2.new(1, 0)
-                    HealthBold.Visible = ESP.Settings.Bold_Text
+                    HealthBold.Visible = Health.Visible and ESP.Settings.Bold_Text
 
                     -- Chams
                     --[[
