@@ -749,6 +749,8 @@ function library:init()
                         option:SetTrans(value == nil and 1 or value[4]);
                     elseif option.class == 'list' then
                         option:Select(value == nil and '' or value);
+                    elseif option.class == 'box' then
+                        option:SetInput(value == nil and '' or value)
                     end
                 end
             end
@@ -785,6 +787,8 @@ function library:init()
                     }
                 elseif option.class == 'list' then
                     cfg[flag] = option.selected;
+                elseif option.class == 'box' then
+                    cfg[flag] = option.input
                 end
             end
             writefile(self.cheatname..'/'..self.gamename..'/configs/'..name..self.fileext, http:JSONEncode(cfg));
@@ -3977,17 +3981,41 @@ function library:init()
                             elseif inp.KeyCode == Enum.KeyCode.Backspace then
                                 input = input:sub(1,-2);
                                 self.objects.inputText.Text = input;
-                            elseif #inp.KeyCode.Name == 1 or table.find(whitelistedBoxKeys, inp.KeyCode) or inp.KeyCode.Name == 'Space' or inp.KeyCode.Name == 'Minus' then
-                                print(inp.KeyCode.Name)
+                            elseif #inp.KeyCode.Name == 1 or table.find(whitelistedBoxKeys, inp.KeyCode) or inp.KeyCode.Name == 'Space' or inp.KeyCode.Name == 'Minus' or inp.KeyCode.Name == 'Equals' or inp.KeyCode.Name == 'Backquote' then
                                 local wlIdx = table.find(whitelistedBoxKeys, inp.KeyCode)
-                                local keyString = inp.KeyCode.Name == 'Space' and ' ' or inp.KeyCode.Name == 'Minus' and '-' or wlIdx ~= nil and tostring(wlIdx-1) or inp.KeyCode.Name
-                                if not (inputservice:IsKeyDown(Enum.KeyCode.LeftShift) or inputservice:IsKeyDown(Enum.KeyCode.RightShift)) then
+                                local keyString = inp.KeyCode.Name == 'Space' and ' ' or inp.KeyCode.Name == 'Minus' and '_' or inp.KeyCode.Name == 'Equals' and '+' or inp.KeyCode.Name == 'Backquote' and '~' or wlIdx ~= nil and tostring(wlIdx-1) or inp.KeyCode.Name
+                                if not (inputservice:IsKeyDown(Enum.KeyCode.LeftShift) and not inputservice:IsKeyDown(Enum.KeyCode.RightShift)) then
                                     keyString = keyString:lower();
                                     if inp.KeyCode.Name == 'Minus' then
-                                        keyString = "_"
+                                        keyString = '-'
+                                    elseif inp.KeyCode.Name == 'Equals' then
+                                        keyString = '='
+                                    elseif inp.KeyCode.Name == 'Backquote' then
+                                        keyString = '`'
+                                    end
+                                else
+                                    if keyString == '1' then
+                                        keyString = '!'
+                                    elseif keyString == '2' then
+                                        keyString = '@'
+                                    elseif keyString == '3' then
+                                        keyString = '#'
+                                    elseif keyString == '4' then
+                                        keyString = '$'
+                                    elseif keyString == '5' then
+                                        keyString = '%'
+                                    elseif keyString == '6' then
+                                        keyString = '^'
+                                    elseif keyString == '7' then
+                                        keyString = '&'
+                                    elseif keyString == '8' then
+                                        keyString = '*'
+                                    elseif keyString == '9' then
+                                        keyString = '('
+                                    elseif keyString == '0' then
+                                        keyString = ')'
                                     end
                                 end
-                                print(keyString)
                                 input = input..keyString;
                                 self.objects.inputText.Text = input;
                             end
