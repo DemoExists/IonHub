@@ -2576,6 +2576,7 @@ function library:init()
                             self.bind = (keybind and keybind) or keybind or self.bind
                             if self.bind == Enum.KeyCode.Backspace then
                                 self.bind = 'none';
+                                self.callback(true)
                             else
                                 keyName = keyNames[keybind] or keybind.Name or keybind
                             end
