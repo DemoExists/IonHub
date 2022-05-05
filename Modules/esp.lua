@@ -137,16 +137,21 @@ local function Pass_Through(From, Target, RaycastParams_, Ignore_Table)
     end
 end
 
-function ESP:Check_Visible(Target)
+function ESP:Check_Visible(Target, FromHead)
     if self.Overrides.Check_Visible ~= nil then
         return self.Overrides.Check_Visible(Player)
     end
+    local Character = Players.LocalPlayer.Character
+    if not Character and FromHead then return false end
+    local Head = Character:FindFirstChild("Head")
+    if not Head and FromHead then return false end
     local RaycastParams_ = RaycastParams.new();
     RaycastParams_.FilterType = Enum.RaycastFilterType.Blacklist;
     local Ignore_Table = {Camera, Players.LocalPlayer.Character}
     RaycastParams_.FilterDescendantsInstances = Ignore_Table;
     RaycastParams_.IgnoreWater = true;
-    local Result = Workspace:Raycast(Camera.CFrame.p, (Target.Position - Camera.CFrame.p).unit * 10000, RaycastParams_)
+    local From = FromHead and Head.Position or Camera.CFrame.p
+    local Result = Workspace:Raycast(From, (Target.Position - From).unit * 10000, RaycastParams_)
     Passed = false
     if Result then
         local Instance_ = Result.Instance
