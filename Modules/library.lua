@@ -2585,6 +2585,10 @@ function library:init()
                                 keyName = keyNames[keybind] or keybind.Name or keybind
                             end
                             if self.bind ~= 'none' then
+                                bind.state = false
+                                if bind.flag then
+                                    library.flags[bind.flag] = bind.state;
+                                end
                                 self.callback(false)
                             end
                             self.keycallback(self.bind);
