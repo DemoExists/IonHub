@@ -3978,6 +3978,7 @@ function library:init()
                                 input = input:sub(1,-2);
                                 self.objects.inputText.Text = input;
                             elseif #inp.KeyCode.Name == 1 or table.find(whitelistedBoxKeys, inp.KeyCode) or inp.KeyCode.Name == 'Space' or inp.KeyCode.Name == 'Minus' then
+                                print(inp.KeyCode.Name)
                                 local wlIdx = table.find(whitelistedBoxKeys, inp.KeyCode)
                                 local keyString = inp.KeyCode.Name == 'Space' and ' ' or inp.KeyCode.Name == 'Minus' and '-' or wlIdx ~= nil and tostring(wlIdx-1) or inp.KeyCode.Name
                                 if not (inputservice:IsKeyDown(Enum.KeyCode.LeftShift) or inputservice:IsKeyDown(Enum.KeyCode.RightShift)) then
@@ -3986,6 +3987,7 @@ function library:init()
                                         keyString = "_"
                                     end
                                 end
+                                print(keyString)
                                 input = input..keyString;
                                 self.objects.inputText.Text = input;
                             end
