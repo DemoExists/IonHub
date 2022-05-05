@@ -187,10 +187,10 @@ do -- Player Metatable
     function Player_Metatable:Update()
         local Box, Box_Outline = self.Components.Box, self.Components.Box_Outline
         local Healthbar, Healthbar_Outline = self.Components.Healthbar, self.Components.Healthbar_Outline
-        local Name, NameBold = self.Components.Name
-        local Distance, DistanceBold = self.Components.Distance
-        local Tool, ToolBold = self.Components.Tool
-        local Health, HealthBold = self.Components.Health
+        local Name, NameBold = self.Components.Name, self.Components.NameBold
+        local Distance, DistanceBold = self.Components.Distance, self.Components.DistanceBold
+        local Tool, ToolBold = self.Components.Tool, self.Components.ToolBold
+        local Health, HealthBold = self.Components.Health, self.Components.HealthBold
         local Chams = true--self.Components.Chams
         if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or Distance == nil or Tool == nil or Health == nil or Chams == nil then
             self:Destroy()
