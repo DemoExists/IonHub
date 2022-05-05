@@ -561,13 +561,13 @@ do -- ESP Functions
         Components.Healthbar = Framework:Draw("Square", {Thickness = 1, ZIndex = 2, Filled = true})
         Components.Healthbar_Outline = Framework:Draw("Square", {Thickness = 3, ZIndex = 1, Filled = true})
         Components.Name = Framework:Draw("Text", {Text = Instance.Name, Font = 2, Size = 13, Outline = true, Center = true})
-        Components.NameBold = Framework:Draw("Text", {Text = Instance.Name, Font = 2, Size = 13, Outline = true, Center = true})
+        Components.NameBold = Framework:Draw("Text", {Text = Instance.Name, Font = 2, Size = 13, Center = true})
         Components.Distance = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
-        Components.DistanceBold = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
+        Components.DistanceBold = Framework:Draw("Text", {Font = 2, Size = 13, Center = true})
         Components.Tool = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
-        Components.ToolBold = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
+        Components.ToolBold = Framework:Draw("Text", {Font = 2, Size = 13 Center = true})
         Components.Health = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
-        Components.HealthBold = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
+        Components.HealthBold = Framework:Draw("Text", {Font = 2, Size = 13, Center = true})
         --Components.Chams = Framework:Instance("Highlight", {Parent = CoreGui, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop})
         self.Objects[Instance] = Object
         return Object
