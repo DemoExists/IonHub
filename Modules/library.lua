@@ -2355,7 +2355,7 @@ function library:init()
                             tooltip = '';
                             order = #self.options+1;
                             callback = function() end;
-                            color = Color3.new(1,.995,.995);
+                            color = Color3.new(1,1,1);
                             trans = 0;
                             open = false;
                             enabled = true;
@@ -3673,7 +3673,7 @@ function library:init()
                         tooltip = '';
                         order = #self.options+1;
                         callback = function() end;
-                        color = Color3.new(1,.995,.995);
+                        color = Color3.new(1,1,1);
                         trans = 0;
                         open = false;
                         enabled = true;
