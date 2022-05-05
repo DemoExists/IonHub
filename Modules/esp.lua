@@ -442,13 +442,15 @@ do -- Player Metatable
                     end
                     --]]
                 else
-                    for Index, Drawing in pairs(self.Components) do
-                        if tostring(Index) == "Chams" then
-                            Drawing.Enabled = false
-                            continue
-                        end
-                        Drawing.Visible = false
-                    end
+                    Box.Visible = false
+                    Box_Outline.Visible = false
+                    Healthbar.Visible = false
+                    Healthbar_Outline.Visible = false
+                    Name.Visible = false
+                    Distance.Visible = false
+                    Tool.Visible = false
+                    Health.Visible = false
+                    --Chams.Enabled = false
                     return
                 end
             else
@@ -473,16 +475,15 @@ do  -- Object Metatable
         ESP.Objects[self.Object] = nil
     end
     function Object_Metatable:Update()
+        local Name = self.Components.Name
+        local Addition = self.Components.Addition
+
         if not ESP.Settings.Objects_Enabled then
-            for Index, Drawing in pairs(self.Components) do
-                Drawing.Visible = false
-            end
+            Name.Visible = false
+            Addition.Visible = false
             return
         end
 
-        local Name = self.Components.Name
-        local Addition = self.Components.Addition
-        
         local Vector, On_Screen = Camera:WorldToViewportPoint(self.PrimaryPart.Position + Vector3.new(0, 1, 0))
 
         if On_Screen then
@@ -499,9 +500,8 @@ do  -- Object Metatable
                 Addition.Visible = false
             end
         else
-            for Index, Drawing in pairs(self.Components) do
-                Drawing.Visible = false
-            end
+            Name.Visible = false
+            Addition.Visible = false
             return
         end
     end
