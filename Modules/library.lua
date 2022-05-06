@@ -2533,7 +2533,7 @@ function library:init()
                             local display = bind.state; if bind.invertindicator then display = not bind.state; end
                             bind.indicatorValue:SetEnabled(display and not bind.noindicator);
                             bind.indicatorValue:SetKey((bind.text == nil or bind.text == '') and (bind.flag == nil and 'unknown' or bind.flag) or bind.text); -- this is so dumb
-                            bind.indicatorValue:SetValue('['..bind.bind == 'none' and 'Always' or keyName:upper()..']');
+                            bind.indicatorValue:SetValue('[Always]');
                         end
     
                         --- Create Objects ---
