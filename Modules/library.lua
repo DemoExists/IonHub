@@ -10,7 +10,7 @@
 
 ]]
 
--- // Loa
+-- // Load
 
 local startupArgs = ({...})[1] or {}
 
