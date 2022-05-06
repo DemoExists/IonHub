@@ -2602,7 +2602,8 @@ function library:init()
                             self.keycallback(self.bind);
                             self:SetKeyText(keyName:upper());
                             self.indicatorValue:SetKey((self.text == nil or self.text == '') and (self.flag == nil and 'unknown' or self.flag) or self.text); -- this is so dumb
-                            self.indicatorValue:SetValue('['..keyName:upper()..']');
+                            self.indicatorValue:SetValue('[alw]');
+                            --self.indicatorValue:SetValue('['..keyName:upper()..']');
                             self.objects.keyText.ThemeColor = self.objects.holder.Hover and 'Accent' or 'Option Text 3';
                         end
     
