@@ -2609,7 +2609,10 @@ function library:init()
                             self.keycallback(self.bind);
                             self:SetKeyText(keyName:upper());
                             self.indicatorValue:SetKey((self.text == nil or self.text == '') and (self.flag == nil and 'unknown' or self.flag) or self.text); -- this is so dumb
-                            self.indicatorValue:SetValue('['..self.bind == 'none' and 'Always' or keyName:upper()..']');
+                            self.indicatorValue:SetValue('['..keyName:upper()..']');
+                            if self.bind == 'none' then
+                                self.indicatorValue:SetValue('[Always]');
+                            end
                             self.objects.keyText.ThemeColor = self.objects.holder.Hover and 'Accent' or 'Option Text 3';
                         end
     
