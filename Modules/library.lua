@@ -2524,8 +2524,16 @@ function library:init()
                             library.options[bind.flag] = bind;
                         end
 
-                        if bind.flag and bind.bind == 'none' then
-                            library.flags[bind.flag] = true;
+                        if bind.bind == 'none' then
+                            bind.state = true
+                            if bind.flag then
+                                library.flags[bind.flag] = bind.state;
+                            end
+                            bind.callback(true)
+                            local display = bind.state; if bind.invertindicator then display = not bind.state; end
+                            bind.indicatorValue:SetEnabled(display and not bind.noindicator);
+                            bind.indicatorValue:SetKey((bind.text == nil or bind.text == '') and (bind.flag == nil and 'unknown' or bind.flag) or bind.text); -- this is so dumb
+                            bind.indicatorValue:SetValue('['..bind.bind == 'none' and 'Always' or keyName:upper()..']');
                         end
     
                         --- Create Objects ---
@@ -2567,7 +2575,6 @@ function library:init()
                         ----------------------
     
                         local c
-    
                         function bind:SetBind(keybind)
                             if c then
                                 c:Disconnect();
@@ -2602,8 +2609,7 @@ function library:init()
                             self.keycallback(self.bind);
                             self:SetKeyText(keyName:upper());
                             self.indicatorValue:SetKey((self.text == nil or self.text == '') and (self.flag == nil and 'unknown' or self.flag) or self.text); -- this is so dumb
-                            self.indicatorValue:SetValue('[alw]');
-                            --self.indicatorValue:SetValue('['..keyName:upper()..']');
+                            self.indicatorValue:SetValue('['..self.bind == 'none' and 'Always' or keyName:upper()..']');
                             self.objects.keyText.ThemeColor = self.objects.holder.Hover and 'Accent' or 'Option Text 3';
                         end
     
