@@ -47,6 +47,15 @@ local Framework = {}; Framework.__index = Framework; do
 end
 
 -- Main
+if not isfolder("ESP") then makefolder("ESP") end
+if not isfolder("ESP/assets") then makefolder("ESP/assets") end
+if not isfile("ESP/assets/taxi.oh") then
+    writefile("ESP/assets/taxi.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/taxi.png"))
+end
+local Images = {
+    Taxi = readfile("ESP/assets/taxi.oh")
+}
+
 local ESP = {
     Settings = {
         Enabled = false,
@@ -64,6 +73,7 @@ local ESP = {
         Tool = {Enabled = false, Position = "Right", Color = Color3.new(1, 1, 1), Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
         Health = {Enabled = false, Position = "Right", Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
         Chams = {Enabled = false, Color = Color3.new(1, 1, 1), Mode = "Visible", OutlineColor = Color3.new(0, 0, 0), Transparency = 0.5, OutlineTransparency = 0}
+        Image = setmetatable({Enabled = false, Image = "Taxi", Raw = Images.Taxi}, {__newindex = function(i, v, n_v) if v == "Image" then self.Raw = Images[n_v] end end})
     },
     Objects = {},
     Overrides = {}
@@ -192,6 +202,7 @@ do -- Player Metatable
         local Tool, ToolBold = self.Components.Tool, self.Components.ToolBold
         local Health, HealthBold = self.Components.Health, self.Components.HealthBold
         local Chams = true--self.Components.Chams
+        local Image = self.Components.Image
         if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or NameBold == nil or Distance == nil or DistanceBold == nil or Tool == nil or ToolBold == nil or Health == nil or HealthBold == nil or Chams == nil then
             self:Destroy()
         end
@@ -266,6 +277,14 @@ do -- Player Metatable
                     Box_Outline.Thickness = Box_Outline_Settings.Outline_Size + 2
                     Box_Outline.Transparency = Framework:Drawing_Transparency(Box_Outline_Settings.Transparency)
                     Box_Outline.Visible = Box_Settings.Enabled and Box_Outline_Settings.Enabled or false
+
+                    local Image_Settings = ESP.Settings.Image
+                    local Image_Enabled = Image_Settings.Enabled
+                    if Image_Enabled then
+                        Image.Size = Box_Size
+                        Image.Position = Box_Position
+                    end
+                    Image.Visible = Image_Enabled
 
                     -- Healthbar
                     local Health_Top_Size_Outline = Vector2.new(Box_Size.X - 4, 3)
@@ -573,6 +592,7 @@ do -- ESP Functions
         Components.Health = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
         Components.HealthBold = Framework:Draw("Text", {Font = 2, Size = 13, Center = true})
         --Components.Chams = Framework:Instance("Highlight", {Parent = CoreGui, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop})
+        Components.Image = Framework:Draw("Image", {Data = self.Settings.Image.Raw})
         self.Objects[Instance] = Object
         return Object
     end
