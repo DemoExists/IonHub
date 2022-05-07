@@ -52,11 +52,27 @@ if not isfolder("ESP/assets") then makefolder("ESP/assets") end
 if not isfile("ESP/assets/taxi.oh") then
     writefile("ESP/assets/taxi.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/taxi.png"))
 end
+if not isfile("ESP/assets/gorilla.oh") then
+    writefile("ESP/assets/gorilla.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/gorilla.png"))
+end
+if not isfile("ESP/assets/saul_goodman.oh") then
+    writefile("ESP/assets/saul_goodman.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/saul_goodman.png"))
+end
+if not isfile("ESP/assets/peter_griffin.oh") then
+    writefile("ESP/assets/peter_griffin.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/peter_griffin.png"))
+end
+if not isfile("ESP/assets/john_herbert.oh") then
+    writefile("ESP/assets/john_herbert.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/john_herbert.png"))
+end
 local Images = {
-    Taxi = readfile("ESP/assets/taxi.oh")
+    Taxi = readfile("ESP/assets/taxi.oh"),
+    Gorilla = readfile("ESP/assets/gorilla.oh"),
+    ["Saul Goodman"] = readfile("ESP/assets/saul_goodman.oh"),
+    ["Peter Griffin"] = readfile("ESP/assets/peter_griffin.oh")
+    ["John Herbert"] = readfile("ESP/assets/john_herbert.oh"),
 }
 
-local ESP = {
+local ESP; ESP = {
     Settings = {
         Enabled = false,
         Bold_Text = false,
@@ -73,12 +89,23 @@ local ESP = {
         Tool = {Enabled = false, Position = "Right", Color = Color3.new(1, 1, 1), Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
         Health = {Enabled = false, Position = "Right", Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
         Chams = {Enabled = false, Color = Color3.new(1, 1, 1), Mode = "Visible", OutlineColor = Color3.new(0, 0, 0), Transparency = 0.5, OutlineTransparency = 0},
-        Image = setmetatable({Enabled = false, Image = "Taxi", Raw = Images.Taxi}, {__newindex = function(i, v, n_v) if v == "Image" then self.Raw = Images[n_v] end end})
+        Image = {Enabled = false, Image = "Taxi", Raw = Images.Taxi}
     },
     Objects = {},
     Overrides = {}
 }
 ESP.__index = ESP
+
+function ESP:UpdateImages()
+    self.Settings.Image.Raw = Images[self.Settings.Image.Image]
+    for _, Object in pairs(self.Objects) do
+        for Index, Drawing in pairs(Object.Components) do
+            if Index == "Image" then
+                Drawing.Data = self.Settings.Image.Raw
+            end
+        end
+    end
+end
 
 function ESP:GetObject(Object)
     return self.Objects[Object]
