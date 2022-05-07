@@ -686,11 +686,11 @@ local Connection = RunService.RenderStepped:Connect(function()
                 local topScreen = Camera:WorldToViewportPoint(Position + Vector3.new(0, China_Hat_Settings.Height, 0));
                 Line.From = Vector2.new(lastScreen.X, lastScreen.Y);
                 Line.To = Vector2.new(nextScreen.X, nextScreen.Y);
-                Line.Transparency = China_Hat_Settings.Transparency
+                Line.Transparency = Framework:Drawing_Transparency(China_Hat_Settings.Transparency)
                 Triangle.PointA = Vector2.new(topScreen.X, topScreen.Y);
                 Triangle.PointB = Line.From;
                 Triangle.PointC = Line.To;
-                Triangle.Transparency = China_Hat_Settings.Transparency
+                Triangle.Transparency = Framework:Drawing_Transparency(China_Hat_Settings.Transparency)
             end
         end
     end
