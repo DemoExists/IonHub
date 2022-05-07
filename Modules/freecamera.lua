@@ -49,10 +49,6 @@ local Input = {}; do
     Input.__index = Input
 end
 
-Camera:GetPropertyChangedSignal("CameraSubject"):Connect(function()
-    FreeCamera:Stop()
-end)
-
 local Connection
 do
     function FreeCamera:Start()
