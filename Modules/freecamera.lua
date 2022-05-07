@@ -70,10 +70,12 @@ do
     end
     function FreeCamera:Stop()
         if Connection ~= nil then Connection:Disconnect() Connection = nil end
+        Wheld, Sheld, Aheld, Dheld, Eheld, Qheld = false, false, false, false, false, false
         Input:Unblock()
     end
     function FreeCamera:Unload()
         if Connection ~= nil then Connection:Disconnect() Connection = nil end
+        Wheld, Sheld, Aheld, Dheld, Eheld, Qheld = false, false, false, false, false, false
         Input:Unblock()
         Input, FreeCamera, Wheld, Sheld, Aheld, Dheld, Eheld, Qheld, Workspace, Camera, Players, LocalPlayer, RunService, UserInputService, HttpService, Lighting, NetworkClient, Mouse, ContextActionService = nil
     end
