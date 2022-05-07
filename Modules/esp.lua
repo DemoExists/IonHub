@@ -678,7 +678,7 @@ local Connection = RunService.RenderStepped:Connect(function()
         local China_Hat = ESP.China_Hat
         for i = 1, #ESP.China_Hat do
             local Line, Triangle = China_Hat[i][1], China_Hat[i][2];
-            if LocalPlayer.Character ~= nil and LocalPlayer.Character:FindFirstChild('Head') and (Camera.CFrame.p - Camera.Focus.p) and LocalPlayer.Character.Humanoid.health > 0 then
+            if LocalPlayer.Character ~= nil and LocalPlayer.Character:FindFirstChild('Head') and LocalPlayer.Character.Humanoid.Health > 0 then
                 local Position = LocalPlayer.Character.Head.Position + Vector3.new(0, China_Hat_Settings.Offset, 0);
                 local Last, Next = (i / 30) * math.pi*2, ((i + 1) / 30) * math.pi*2;
                 local lastScreen = Camera:WorldToViewportPoint(Position + (Vector3.new(math.cos(Last), 0, math.sin(Last)) * China_Hat_Settings.Radius));
@@ -686,10 +686,12 @@ local Connection = RunService.RenderStepped:Connect(function()
                 local topScreen = Camera:WorldToViewportPoint(Position + Vector3.new(0, China_Hat_Settings.Height, 0));
                 Line.From = Vector2.new(lastScreen.X, lastScreen.Y);
                 Line.To = Vector2.new(nextScreen.X, nextScreen.Y);
+                Line.Color = China_Hat_Settings.Color
                 Line.Transparency = Framework:Drawing_Transparency(China_Hat_Settings.Transparency)
                 Triangle.PointA = Vector2.new(topScreen.X, topScreen.Y);
                 Triangle.PointB = Line.From;
                 Triangle.PointC = Line.To;
+                Triangle.Color = China_Hat_Settings.Color
                 Triangle.Transparency = Framework:Drawing_Transparency(China_Hat_Settings.Transparency)
             end
         end
