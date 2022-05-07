@@ -2,6 +2,7 @@
 local Workspace = game:GetService("Workspace")
 local Camera = Workspace.CurrentCamera
 local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 
@@ -89,10 +90,12 @@ local ESP; ESP = {
         Tool = {Enabled = false, Position = "Right", Color = Color3.new(1, 1, 1), Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
         Health = {Enabled = false, Position = "Right", Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
         Chams = {Enabled = false, Color = Color3.new(1, 1, 1), Mode = "Visible", OutlineColor = Color3.new(0, 0, 0), Transparency = 0.5, OutlineTransparency = 0},
-        Image = {Enabled = false, Image = "Taxi", Raw = Images.Taxi}
+        Image = {Enabled = false, Image = "Taxi", Raw = Images.Taxi},
+        China_Hat = {Enabled = false, Color = Color3.new(1, 1, 1), Transparency = 0.5, Height = 0.5, Radius = 1, Offset = 1}
     },
     Objects = {},
-    Overrides = {}
+    Overrides = {},
+    China_Hat = {}
 }
 ESP.__index = ESP
 
@@ -179,13 +182,13 @@ function ESP:Check_Visible(Target, FromHead)
     if self.Overrides.Check_Visible ~= nil then
         return self.Overrides.Check_Visible(Player)
     end
-    local Character = Players.LocalPlayer.Character
+    local Character = LocalPlayer.Character
     if not Character and FromHead then return false end
     local Head = Character:FindFirstChild("Head")
     if not Head and FromHead then return false end
     local RaycastParams_ = RaycastParams.new();
     RaycastParams_.FilterType = Enum.RaycastFilterType.Blacklist;
-    local Ignore_Table = {Camera, Players.LocalPlayer.Character}
+    local Ignore_Table = {Camera, LocalPlayer.Character}
     RaycastParams_.FilterDescendantsInstances = Ignore_Table;
     RaycastParams_.IgnoreWater = true;
     local From = FromHead and Head.Position or Camera.CFrame.p
@@ -271,7 +274,7 @@ do -- Player Metatable
                 local Good = false
 
                 if ESP.Settings.Team_Check then
-                    if ESP:Get_Team(self.Player) ~= ESP:Get_Team(Players.LocalPlayer) then
+                    if ESP:Get_Team(self.Player) ~= ESP:Get_Team(LocalPlayer) then
                         Good = true
                     end
                 else
@@ -658,7 +661,41 @@ do -- ESP Functions
     end
 end
 
+-- China Hat
+for i = 1, 30 do
+    ESP.China_Hat[i] = {Framework:Draw('Line', {Visible = false}), Framework:Draw('Triangle', {Visible = false})}
+    ESP.China_Hat[i][1].ZIndex = 2;
+    ESP.China_Hat[i][1].Thickness = 2;
+    ESP.China_Hat[i][2].ZIndex = 1;
+    ESP.China_Hat[i][2].Filled = true;
+end
+
+-- Render Connection
 local Connection = RunService.RenderStepped:Connect(function()
+    -- China Hat
+    local China_Hat_Settings = ESP.Settings.China_Hat
+    if ESP.Settings.China_Hat.Enabled then
+        local China_Hat = ESP.China_Hat
+        for i = 1, #ESP.China_Hat do
+            local Line, Triangle = China_Hat[i][1], China_Hat[i][2];
+            if LocalPlayer.Character ~= nil and LocalPlayer.Character:FindFirstChild('Head') and (Camera.CFrame.p - Camera.Focus.p) and LocalPlayer.Character.Humanoid.health > 0 then
+                local Position = LocalPlayer.Character.Head.Position + Vector3.new(0, China_Hat_Settings.Offset, 0);
+                local Last, Next = (i / 30) * math.pi*2, ((i + 1) / 30) * math.pi*2;
+                local lastScreen = Camera:WorldToViewportPoint(Position + (Vector3.new(math.cos(Last), 0, math.sin(Last)) * China_Hat_Settings.Radius));
+                local nextScreen = Camera:WorldToViewportPoint(Position + (Vector3.new(math.cos(Next), 0, math.sin(Next)) * China_Hat_Settings.Radius));
+                local topScreen = Camera:WorldToViewportPoint(Position + Vector3.new(0, China_Hat_Settings.Height, 0));
+                Line.From = Vector2.new(lastScreen.X, lastScreen.Y);
+                Line.To = Vector2.new(nextScreen.X, nextScreen.Y);
+                Line.Transparency = China_Hat_Settings.Transparency
+                Triangle.PointA = Vector2.new(topScreen.X, topScreen.Y);
+                Triangle.PointB = Line.From;
+                Triangle.PointC = Line.To;
+                Triangle.Transparency = China_Hat_Settings.Transparency
+            end
+        end
+    end
+
+    -- Object Updating
     for i, Object in pairs(ESP.Objects) do
         Object:Update()
     end
