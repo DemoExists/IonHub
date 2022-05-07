@@ -68,8 +68,8 @@ local Images = {
     Taxi = readfile("ESP/assets/taxi.oh"),
     Gorilla = readfile("ESP/assets/gorilla.oh"),
     ["Saul Goodman"] = readfile("ESP/assets/saul_goodman.oh"),
-    ["Peter Griffin"] = readfile("ESP/assets/peter_griffin.oh")
-    ["John Herbert"] = readfile("ESP/assets/john_herbert.oh"),
+    ["Peter Griffin"] = readfile("ESP/assets/peter_griffin.oh"),
+    ["John Herbert"] = readfile("ESP/assets/john_herbert.oh")
 }
 
 local ESP; ESP = {
