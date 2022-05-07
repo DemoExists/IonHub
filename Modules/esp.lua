@@ -672,6 +672,11 @@ end
 
 -- Render Connection
 local Connection = RunService.RenderStepped:Connect(function()
+    -- Object Updating
+    for i, Object in pairs(ESP.Objects) do
+        Object:Update()
+    end
+
     -- China Hat
     local China_Hat_Settings = ESP.Settings.China_Hat
     if ESP.Settings.China_Hat.Enabled then
@@ -687,7 +692,7 @@ local Connection = RunService.RenderStepped:Connect(function()
                 if not onScreenLast or not onScreenNext or not onScreenTop then
                     Line.Transparency = 0
                     Triangle.Transparency = 0
-                    return
+                    continue
                 end
                 Line.From = Vector2.new(lastScreen.X, lastScreen.Y);
                 Line.To = Vector2.new(nextScreen.X, nextScreen.Y);
@@ -700,11 +705,6 @@ local Connection = RunService.RenderStepped:Connect(function()
                 Triangle.Transparency = Framework:Drawing_Transparency(China_Hat_Settings.Transparency)
             end
         end
-    end
-
-    -- Object Updating
-    for i, Object in pairs(ESP.Objects) do
-        Object:Update()
     end
 end)
 
