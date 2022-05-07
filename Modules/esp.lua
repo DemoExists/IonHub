@@ -281,8 +281,8 @@ do -- Player Metatable
                     local Image_Settings = ESP.Settings.Image
                     local Image_Enabled = Image_Settings.Enabled
                     if Image_Enabled then
-                        Image.Size = Box_Size
-                        Image.Position = Box_Position
+                        Image.Size = -Box_Size
+                        Image.Position = Box_Position + Box_Size
                     end
                     Image.Visible = Image_Enabled
 
@@ -503,6 +503,7 @@ do -- Player Metatable
                     Health.Visible = false
                     HealthBold.Visible = false
                     --Chams.Enabled = false
+                    Image.Visible = false
                     return
                 end
             else
