@@ -53,30 +53,58 @@ end
 local Connection
 do
     function FreeCamera:Start()
+        local Character = LocalPlayer.Character
+        if Character then
+            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+            if Humanoid then
+                Humanoid.AutoRotate = false
+            end
+        end
         FreeCamera.CFrame = Camera.CFrame
         if Connection ~= nil then Connection:Disconnect() Connection = nil end
         Input:Block()
         Connection = RunService.RenderStepped:Connect(function()
-            local Speed = FreeCamera.Speed
-            if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) or UserInputService:IsKeyDown(Enum.KeyCode.RightShift) then
-                Speed = Speed * 3
+            local Character = LocalPlayer.Character
+            if Character then
+                local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+                if Humanoid then
+                    Humanoid.AutoRotate = false
+                    local Speed = FreeCamera.Speed
+                    if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) or UserInputService:IsKeyDown(Enum.KeyCode.RightShift) then
+                        Speed = Speed * 3
+                    end
+                    if UserInputService:IsKeyDown(Enum.KeyCode.LeftAlt) or UserInputService:IsKeyDown(Enum.KeyCode.RightAlt) then
+                        Speed = Speed / 3
+                    end
+                    local newCFrame = FreeCamera.CFrame * CFrame.new((Aheld and Dheld and 0) or (Aheld and -Speed) or (Dheld and Speed), (Eheld and Qheld and 0) or (Qheld and -Speed) or (Eheld and Speed), (Wheld and Sheld and 0) or (Wheld and -Speed) or (Sheld and Speed))
+                    FreeCamera.CFrame = CFrame.lookAt(newCFrame.p, newCFrame.p + Camera.CFrame.LookVector)
+                    Camera.CFrame = FreeCamera.CFrame
+                end
             end
-            if UserInputService:IsKeyDown(Enum.KeyCode.LeftAlt) or UserInputService:IsKeyDown(Enum.KeyCode.RightAlt) then
-                Speed = Speed / 3
-            end
-            local newCFrame = FreeCamera.CFrame * CFrame.new((Aheld and Dheld and 0) or (Aheld and -Speed) or (Dheld and Speed), (Eheld and Qheld and 0) or (Qheld and -Speed) or (Eheld and Speed), (Wheld and Sheld and 0) or (Wheld and -Speed) or (Sheld and Speed))
-            FreeCamera.CFrame = CFrame.lookAt(newCFrame.p, newCFrame.p + Camera.CFrame.LookVector)
-            Camera.CFrame = FreeCamera.CFrame
         end)
     end
     function FreeCamera:Stop()
         if Connection ~= nil then Connection:Disconnect() Connection = nil end
         Input:Unblock()
         Wheld, Sheld, Aheld, Dheld, Eheld, Qheld = false, false, false, false, false, false
+        local Character = LocalPlayer.Character
+        if Character then
+            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+            if Humanoid then
+                Humanoid.AutoRotate = true
+            end
+        end
     end
     function FreeCamera:Unload()
         if Connection ~= nil then Connection:Disconnect() Connection = nil end
         Input:Unblock()
+        local Character = LocalPlayer.Character
+        if Character then
+            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+            if Humanoid then
+                Humanoid.AutoRotate = true
+            end
+        end
         Input, FreeCamera, Wheld, Sheld, Aheld, Dheld, Eheld, Qheld, Workspace, Camera, Players, LocalPlayer, RunService, UserInputService, HttpService, Lighting, NetworkClient, Mouse, ContextActionService = nil
     end
     FreeCamera.__index = FreeCamera
