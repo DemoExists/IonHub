@@ -89,8 +89,9 @@ do
         Wheld, Sheld, Aheld, Dheld, Eheld, Qheld = false, false, false, false, false, false
         local Character = LocalPlayer.Character
         if Character then
-            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
-            if Humanoid then
+            local Head, HumanoidRootPart, Humanoid = Character:FindFirstChild("Head"), Character:FindFirstChild("HumanoidRootPart"), Character:FindFirstChildOfClass("Humanoid")
+            if Head and HumanoidRootPart and Humanoid then
+                Camera.CFrame = CFrame.lookAt(Camera.CFrame.p, Camera.CFrame.p + Head.CFrame.LookVector)
                 Humanoid.AutoRotate = true
             end
         end
@@ -100,8 +101,9 @@ do
         Input:Unblock()
         local Character = LocalPlayer.Character
         if Character then
-            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
-            if Humanoid then
+            local HumanoidRootPart, Humanoid = Character:FindFirstChildOfClass("HumanoidRootPart"), Character:FindFirstChildOfClass("Humanoid")
+            if HumanoidRootPart and Humanoid then
+                Camera.CFrame = CFrame.lookAt(Camera.CFrame.p, Camera.CFrame.p + Head.CFrame.LookVector)
                 Humanoid.AutoRotate = true
             end
         end
