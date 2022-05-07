@@ -681,9 +681,14 @@ local Connection = RunService.RenderStepped:Connect(function()
             if LocalPlayer.Character ~= nil and LocalPlayer.Character:FindFirstChild('Head') and LocalPlayer.Character.Humanoid.Health > 0 then
                 local Position = LocalPlayer.Character.Head.Position + Vector3.new(0, China_Hat_Settings.Offset, 0);
                 local Last, Next = (i / 30) * math.pi*2, ((i + 1) / 30) * math.pi*2;
-                local lastScreen = Camera:WorldToViewportPoint(Position + (Vector3.new(math.cos(Last), 0, math.sin(Last)) * China_Hat_Settings.Radius));
-                local nextScreen = Camera:WorldToViewportPoint(Position + (Vector3.new(math.cos(Next), 0, math.sin(Next)) * China_Hat_Settings.Radius));
-                local topScreen = Camera:WorldToViewportPoint(Position + Vector3.new(0, China_Hat_Settings.Height, 0));
+                local lastScreen, onScreenLast = Camera:WorldToViewportPoint(Position + (Vector3.new(math.cos(Last), 0, math.sin(Last)) * China_Hat_Settings.Radius));
+                local nextScreen, onScreenNext = Camera:WorldToViewportPoint(Position + (Vector3.new(math.cos(Next), 0, math.sin(Next)) * China_Hat_Settings.Radius));
+                local topScreen, onScreenTop = Camera:WorldToViewportPoint(Position + Vector3.new(0, China_Hat_Settings.Height, 0));
+                if not onScreenLast or not onScreenNext or not onScreenTop then
+                    Line.Transparency = 0
+                    Triangle.Transparency = 0
+                    return
+                end
                 Line.From = Vector2.new(lastScreen.X, lastScreen.Y);
                 Line.To = Vector2.new(nextScreen.X, nextScreen.Y);
                 Line.Color = China_Hat_Settings.Color
