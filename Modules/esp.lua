@@ -1,10 +1,21 @@
+--[[------------------------------------------------
+|
+|    Library Made for IonHub (discord.gg/seU6gab)
+|    Developed by tatar0071#0627
+|
+--]]------------------------------------------------
+
 -- Services
 local Workspace = game:GetService("Workspace")
 local Camera = Workspace.CurrentCamera
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
-local CoreGui = game:GetService("CoreGui")
+local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
+local Lighting = game:GetService("Lighting")
+local NetworkClient = game:GetService("NetworkClient")
+local Mouse = LocalPlayer:GetMouse()
 
 -- Framework
 local Framework = {}; Framework.__index = Framework; do
@@ -231,7 +242,7 @@ do -- Player Metatable
         local Distance, DistanceBold = self.Components.Distance, self.Components.DistanceBold
         local Tool, ToolBold = self.Components.Tool, self.Components.ToolBold
         local Health, HealthBold = self.Components.Health, self.Components.HealthBold
-        local Chams = true--self.Components.Chams
+        local Chams = self.Components.Chams -- SET TO true IF CRASHING
         local Image = self.Components.Image
         if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or NameBold == nil or Distance == nil or DistanceBold == nil or Tool == nil or ToolBold == nil or Health == nil or HealthBold == nil or Chams == nil then
             self:Destroy()
@@ -502,8 +513,8 @@ do -- Player Metatable
                     HealthBold.Position = Health.Position + Vector2.new(1, 0)
                     HealthBold.Visible = Health.Visible and ESP.Settings.Bold_Text
 
-                    -- Chams
-                    --[[
+                    -- Chams -- IGNORE IF CRASHING
+                    --[ 
                     local Chams_Settings = ESP.Settings.Chams
                     local Is_Visible = false
                     if ESP:Check_Visible(Head) or ESP:Check_Visible(HumanoidRootPart) then
@@ -622,7 +633,7 @@ do -- ESP Functions
         Components.ToolBold = Framework:Draw("Text", {Font = 2, Size = 13, Center = true})
         Components.Health = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
         Components.HealthBold = Framework:Draw("Text", {Font = 2, Size = 13, Center = true})
-        --Components.Chams = Framework:Instance("Highlight", {Parent = CoreGui, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop})
+        Components.Chams = Framework:Instance("Highlight", {Parent = CoreGui, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop}) -- IGNORE IF CRASHING
         Components.Image = Framework:Draw("Image", {Data = self.Settings.Image.Raw})
         self.Objects[Instance] = Object
         return Object
