@@ -11,12 +11,6 @@ local Camera = Workspace.CurrentCamera
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
-local HttpService = game:GetService("HttpService")
-local Lighting = game:GetService("Lighting")
-local NetworkClient = game:GetService("NetworkClient")
-local Mouse = LocalPlayer:GetMouse()
-local ContextActionService = game:GetService("ContextActionService")
 
 -- Framework
 local Framework = {}; Framework.__index = Framework; do
