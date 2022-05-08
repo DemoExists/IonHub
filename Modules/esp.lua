@@ -238,7 +238,7 @@ do -- Player Metatable
         local Distance, DistanceBold = self.Components.Distance, self.Components.DistanceBold
         local Tool, ToolBold = self.Components.Tool, self.Components.ToolBold
         local Health, HealthBold = self.Components.Health, self.Components.HealthBold
-        local Chams = _G.chamsEnabled and self.Components.Chams or true
+        local Chams = _G.chamsEnabled == true and self.Components.Chams or true
         local Image = self.Components.Image
         if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or NameBold == nil or Distance == nil or DistanceBold == nil or Tool == nil or ToolBold == nil or Health == nil or HealthBold == nil or Chams == nil then
             self:Destroy()
@@ -511,7 +511,6 @@ do -- Player Metatable
 
                     -- Chams
                     if _G.chamsEnabled == true then
-                        print(3,Chams.ClassName)
                         local Chams_Settings = ESP.Settings.Chams
                         local Is_Visible = false
                         if ESP:Check_Visible(Head) or ESP:Check_Visible(HumanoidRootPart) then
@@ -519,14 +518,13 @@ do -- Player Metatable
                         end
                         local Chams_Enabled = Chams_Settings.Enabled
                         Chams.Enabled = Chams_Enabled
-                        Chams.Adornee = Chams_Enabled and Character or nil
-                        print(2,Chams.ClassName)
+                        Chams.Adornee = Chams_Enabled and Character
                         if Chams_Enabled then
-                            print(1,Chams.ClassName)
                             Chams.FillColor = Chams_Settings.Mode == "Visible" and Is_Visible and Color3.new(0, 1, 0) or Chams_Settings.Color
                             Chams.OutlineColor = Chams_Settings.OutlineColor
                             Chams.FillTransparency = Chams_Settings.Transparency
                             Chams.OutlineTransparency = Chams_Settings.OutlineTransparency
+                            print(Chams.ClassName, Chams.Parent, Chams.Enabled, Chams.Adornee, Chams.FillColor, Chams.FillTransparency)
                         end
                     end
                 else
@@ -542,7 +540,7 @@ do -- Player Metatable
                     ToolBold.Visible = false
                     Health.Visible = false
                     HealthBold.Visible = false
-                    --Chams.Enabled = false
+                    Chams.Enabled = false
                     Image.Visible = false
                     return
                 end
@@ -632,7 +630,7 @@ do -- ESP Functions
         Components.ToolBold = Framework:Draw("Text", {Font = 2, Size = 13, Center = true})
         Components.Health = Framework:Draw("Text", {Font = 2, Size = 13, Outline = true, Center = true})
         Components.HealthBold = Framework:Draw("Text", {Font = 2, Size = 13, Center = true})
-        Components.Chams = _G.chamsEnabled and Framework:Instance("Highlight", {Parent = CoreGui, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop}) or true
+        Components.Chams = _G.chamsEnabled == true and Framework:Instance("Highlight", {Parent = CoreGui, DepthMode = Enum.HighlightDepthMode.AlwaysOnTop}) or true
         Components.Image = Framework:Draw("Image", {Data = self.Settings.Image.Raw})
         self.Objects[Instance] = Object
         return Object
