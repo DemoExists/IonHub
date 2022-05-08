@@ -540,7 +540,9 @@ do -- Player Metatable
                     ToolBold.Visible = false
                     Health.Visible = false
                     HealthBold.Visible = false
-                    Chams.Enabled = false
+                    if _G.chamsEnabled then
+                        Chams.Enabled = false
+                    end
                     Image.Visible = false
                     return
                 end
