@@ -510,9 +510,8 @@ do -- Player Metatable
                     HealthBold.Visible = Health.Visible and ESP.Settings.Bold_Text
 
                     -- Chams
-                    print(_G.chamsEnabled)
                     if _G.chamsEnabled == true then
-                        print("Chams Enabled")
+                        print(3,Chams.ClassName)
                         local Chams_Settings = ESP.Settings.Chams
                         local Is_Visible = false
                         if ESP:Check_Visible(Head) or ESP:Check_Visible(HumanoidRootPart) then
@@ -521,7 +520,9 @@ do -- Player Metatable
                         local Chams_Enabled = Chams_Settings.Enabled
                         Chams.Enabled = Chams_Enabled
                         Chams.Adornee = Chams_Enabled and Character or nil
+                        print(2,Chams.ClassName)
                         if Chams_Enabled then
+                            print(1,Chams.ClassName)
                             Chams.FillColor = Chams_Settings.Mode == "Visible" and Is_Visible and Color3.new(0, 1, 0) or Chams_Settings.Color
                             Chams.OutlineColor = Chams_Settings.OutlineColor
                             Chams.FillTransparency = Chams_Settings.Transparency
