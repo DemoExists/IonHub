@@ -221,7 +221,7 @@ do -- Player Metatable
     Player_Metatable.__index = Player_Metatable
     function Player_Metatable:Destroy()
         for Index, Component in pairs(self.Components) do
-            if tostring(Index) == "Chams" then
+            if tostring(Index) == "Chams" and _G.chamsEnabled then
                 Component:Destroy()
                 self.Components[Index] = nil
                 continue
