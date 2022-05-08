@@ -16,6 +16,7 @@ local HttpService = game:GetService("HttpService")
 local Lighting = game:GetService("Lighting")
 local NetworkClient = game:GetService("NetworkClient")
 local Mouse = LocalPlayer:GetMouse()
+local ContextActionService = game:GetService("ContextActionService")
 
 -- Framework
 local Framework = {}; Framework.__index = Framework; do
