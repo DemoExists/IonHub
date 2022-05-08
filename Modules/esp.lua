@@ -509,7 +509,7 @@ do -- Player Metatable
                     HealthBold.Visible = Health.Visible and ESP.Settings.Bold_Text
 
                     -- Chams
-                    if _G.chamsEnabled
+                    if _G.chamsEnabled then
                         local Chams_Settings = ESP.Settings.Chams
                         local Is_Visible = false
                         if ESP:Check_Visible(Head) or ESP:Check_Visible(HumanoidRootPart) then
