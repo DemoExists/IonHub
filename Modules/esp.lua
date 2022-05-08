@@ -2,6 +2,7 @@
 |
 |    Library Made for IonHub (discord.gg/seU6gab)
 |    Developed by tatar0071#0627
+|    IF YOU USE THIS, PLEASE CREDIT DEVELOPER!
 |
 --]]------------------------------------------------
 
