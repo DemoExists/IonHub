@@ -30,6 +30,7 @@ end
 local players, http, runservice, inputservice, tweenService, stats, actionservice = gs('Players'), gs('HttpService'), gs('RunService'), gs('UserInputService'), gs('TweenService'), gs('Stats'), gs('ContextActionService')
 local localplayer = players.LocalPlayer
 
+local setByConfig = false
 local floor, ceil, huge, pi, clamp = math.floor, math.ceil, math.huge, math.pi, math.clamp
 local c3new, fromrgb, fromhsv = Color3.new, Color3.fromRGB, Color3.fromHSV
 local next, newInstance, newUDim2, newVector2 = next, Instance.new, UDim2.new, Vector2.new
@@ -706,13 +707,6 @@ function library:init()
     makefolder(self.cheatname..'/assets')
     makefolder(self.cheatname..'/'..self.gamename)
     makefolder(self.cheatname..'/'..self.gamename..'/configs');
-    writefile(self.cheatname..'/'..self.gamename..'/waypoints.txt', '');
-    if not isfile(self.cheatname..'_friendlist.txt') then
-        writefile(self.cheatname..'_friendlist.txt', http:JSONEncode({}))
-    end
-    if not isfile(self.cheatname..'_enemylist.txt') then
-        writefile(self.cheatname..'_enemylist.txt', http:JSONEncode({}))
-    end
 
     function self:SetTheme(theme)
         for i,v in next, theme do
@@ -735,6 +729,7 @@ function library:init()
         end
 
         local s,e = pcall(function()
+            setByConfig = true
             for flag,value in next, http:JSONDecode(cfg) do
                 local option = library.options[flag]
                 if option ~= nil then
@@ -754,6 +749,7 @@ function library:init()
                     end
                 end
             end
+            setByConfig = false
         end)
 
         if s then
@@ -4904,25 +4900,40 @@ function library:CreateSettingsTab(menu)
     mainSection:AddSlider({text = 'Custom X', flag = 'watermark_x', suffix = '%', min = 0, max = 100, increment = .1});
     mainSection:AddSlider({text = 'Custom Y', flag = 'watermark_y', suffix = '%', min = 0, max = 100, increment = .1});
 
-    local themeStrings = {};
+    local themeStrings = {"Custom"};
     for _,v in next, library.themes do
         table.insert(themeStrings, v.name)
     end
-    local themeSection = settingsTab:AddSection('Theme', 2);
+    local themeTab = menu:AddTab('Theme', 990);
+    local themeSection = themeTab:AddSection('Theme', 1);
+    local setByPreset = false
 
-    themeSection:AddColor({text = 'Accent', flag = 'theme_accent', callback = function(c3)
-        library.theme.Accent = c3
-        library:SetTheme(library.theme)
-    end});
     themeSection:AddList({text = 'Presets', flag = 'preset_theme', values = themeStrings, callback = function(newTheme)
+        if newTheme == "Custom" then return end
+        setByPreset = true
         for _,v in next, library.themes do
             if v.name == newTheme then
-                library.options.theme_accent:SetColor(v.theme.Accent);
+                for x, d in pairs(library.options) do
+                    if v.theme[tostring(x)] ~= nil then
+                        d:SetColor(v.theme[tostring(x)])
+                    end
+                end
                 library:SetTheme(v.theme)
                 break
             end
         end
+        setByPreset = false
     end}):Select('Default');
+
+    for i, v in pairs(library.theme) do
+        themeSection:AddColor({text = i, flag = i, color = library.theme[i], callback = function(c3)
+            library.theme[i] = c3
+            library:SetTheme(library.theme)
+            if not setByPreset and not setByConfig then 
+                library.options.preset_theme:Select('Custom')
+            end
+        end});
+    end
 
     return settingsTab;
 end
