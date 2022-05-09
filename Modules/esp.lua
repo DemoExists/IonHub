@@ -73,12 +73,16 @@ end
 if not isfile("ESP/assets/john_herbert.oh") then
     writefile("ESP/assets/john_herbert.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/john_herbert.png"))
 end
+if not isfile("ESP/assets/fortnite.oh") then
+    writefile("ESP/assets/fortnite.oh", game:HttpGet("https://raw.githubusercontent.com/tatar0071/IonHub/main/Assets/fortnite.png"))
+end
 local Images = {
     Taxi = readfile("ESP/assets/taxi.oh"),
     Gorilla = readfile("ESP/assets/gorilla.oh"),
     ["Saul Goodman"] = readfile("ESP/assets/saul_goodman.oh"),
     ["Peter Griffin"] = readfile("ESP/assets/peter_griffin.oh"),
-    ["John Herbert"] = readfile("ESP/assets/john_herbert.oh")
+    ["John Herbert"] = readfile("ESP/assets/john_herbert.oh"),
+    ["Fortnite"] = readfile("ESP/assets/fortnite.oh")
 }
 
 local ESP; ESP = {
@@ -191,9 +195,9 @@ function ESP:Check_Visible(Target, FromHead)
         return self.Overrides.Check_Visible(Player)
     end
     local Character = LocalPlayer.Character
-    if not Character and FromHead then return false end
+    if not Character then return false end
     local Head = Character:FindFirstChild("Head")
-    if not Head and FromHead then return false end
+    if not Head then return false end
     local RaycastParams_ = RaycastParams.new();
     RaycastParams_.FilterType = Enum.RaycastFilterType.Blacklist;
     local Ignore_Table = {Camera, LocalPlayer.Character}
