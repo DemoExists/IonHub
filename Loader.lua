@@ -1,4 +1,6 @@
-local Games = {}
+local Games = {
+    2862098693 = "Project Delta"
+}
 
 local GameId = game.GameId
 
