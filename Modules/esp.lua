@@ -255,7 +255,22 @@ do -- Player Metatable
         if Character ~= nil then
             local Head, HumanoidRootPart, Humanoid = Character:FindFirstChild("Head"), Character:FindFirstChild("HumanoidRootPart"), Character:FindFirstChildOfClass("Humanoid")
             if not Humanoid then
-                self:Destroy()
+                Box.Visible = false
+                Box_Outline.Visible = false
+                Healthbar.Visible = false
+                Healthbar_Outline.Visible = false
+                Name.Visible = false
+                NameBold.Visible = false
+                Distance.Visible = false
+                DistanceBold.Visible = false
+                Tool.Visible = false
+                ToolBold.Visible = false
+                Health.Visible = false
+                HealthBold.Visible = false
+                if _G.chamsEnabled == true then
+                    Chams.Enabled = false
+                end
+                Image.Visible = false
                 return
             end
             local Current_Health, Health_Maximum = ESP:Get_Health(self.Player), Humanoid.MaxHealth
@@ -554,11 +569,41 @@ do -- Player Metatable
                     return
                 end
             else
-                self:Destroy()
+                Box.Visible = false
+                Box_Outline.Visible = false
+                Healthbar.Visible = false
+                Healthbar_Outline.Visible = false
+                Name.Visible = false
+                NameBold.Visible = false
+                Distance.Visible = false
+                DistanceBold.Visible = false
+                Tool.Visible = false
+                ToolBold.Visible = false
+                Health.Visible = false
+                HealthBold.Visible = false
+                if _G.chamsEnabled == true then
+                    Chams.Enabled = false
+                end
+                Image.Visible = false
                 return
             end
         else
-            self:Destroy()
+            Box.Visible = false
+            Box_Outline.Visible = false
+            Healthbar.Visible = false
+            Healthbar_Outline.Visible = false
+            Name.Visible = false
+            NameBold.Visible = false
+            Distance.Visible = false
+            DistanceBold.Visible = false
+            Tool.Visible = false
+            ToolBold.Visible = false
+            Health.Visible = false
+            HealthBold.Visible = false
+            if _G.chamsEnabled == true then
+                Chams.Enabled = false
+            end
+            Image.Visible = false
             return
         end
     end
