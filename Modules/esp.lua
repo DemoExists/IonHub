@@ -93,6 +93,7 @@ local ESP; ESP = {
         Team_Check = false,
         Improved_Visible_Check = false,
         Maximal_Distance = 1000,
+        Object_Maximal_Distance = 1000,
         Highlight = {Enabled = false, Color = Color3.new(1, 0, 0), Target = ""},
         Box = {Enabled = false, Color = Color3.new(1, 1, 1), Transparency = 0},
         Box_Outline = {Enabled = false, Color = Color3.new(0, 0, 0), Transparency = 0, Outline_Size = 1},
@@ -585,7 +586,9 @@ do  -- Object Metatable
 
         local Vector, On_Screen = Camera:WorldToViewportPoint(self.PrimaryPart.Position + Vector3.new(0, 1, 0))
 
-        if On_Screen then
+        local Meter_Distance = math.floor(Vector.Z / 3.5714285714 + 0.5)
+
+        if On_Screen and Meter_Distance < ESP.Settings.Object_Maximal_Distance then
             -- Name
             Name.Text = self.Name .. " [" .. math.floor(Vector.Z / 3.5714285714 + 0.5) .. "m]"
             Name.Position = Framework:V3_To_V2(Vector)
