@@ -664,7 +664,11 @@ do -- ESP Functions
             Name = (Data.Name ~= nil and Data.Name) or Instance.Name
         }, Object_Metatable)
         if Object.PrimaryPart == nil then
-            return
+            if Object:IsA("Model") then
+                return
+            else
+                Object.PrimaryPart = Object
+            end
         end
         if self:GetObject(Instance) then
             self:GetObject(Instance):Destroy()
