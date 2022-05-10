@@ -1,5 +1,5 @@
 local Games = {
-    ["2862098693"] = "Project Delta"
+    ["2862098693"] = "Project%20Delta"
 }
 
 local GameId = tostring(game.GameId)
