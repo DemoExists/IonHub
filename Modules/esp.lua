@@ -657,18 +657,14 @@ do -- ESP Functions
         local obj = Data.Object or Data.object or Data.Obj or Data.obj or Instance
         local Object = setmetatable({
             Object = obj,
-            PrimaryPart = Data.PrimaryPart or Data.primarypart or Data.pp or Data.PP or Data.primpart or Data.PrimPart or Data.PPart or Data.ppart or Data.pPart or Data.Ppart or obj.PrimaryPart or obj:FindFirstChildOfClass("BasePart"),
+            PrimaryPart = Data.PrimaryPart or Data.primarypart or Data.pp or Data.PP or Data.primpart or Data.PrimPart or Data.PPart or Data.ppart or Data.pPart or Data.Ppart or obj:IsA("Model") and obj.PrimaryPart or obj:FindFirstChildOfClass("BasePart") or obj:IsA("BasePart") and obj,
             Addition = Addition,
             Components = {},
             Type = Data.Type,
             Name = (Data.Name ~= nil and Data.Name) or Instance.Name
         }, Object_Metatable)
         if Object.PrimaryPart == nil then
-            if Instance:IsA("Model") then
-                return
-            else
-                Object.PrimaryPart = Object
-            end
+            return
         end
         if self:GetObject(Instance) then
             self:GetObject(Instance):Destroy()
