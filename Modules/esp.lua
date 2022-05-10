@@ -698,9 +698,10 @@ do -- ESP Functions
             Addition.Text = Addition.text or ""
         end
         if Addition.Color == nil then
-            Addition.Color = Addition.color or Addition.col or Addition.Col or Color3.new(1, 1, 1)
+            Addition.Color = Addition.Color or Addition.color or Addition.col or Addition.Col or Color3.new(1, 1, 1)
         end
         local obj = Data.Object or Data.object or Data.Obj or Data.obj or Instance
+        local col = Data.Color or Data.color or Data.col or Data.Col or Color3.new(1, 1, 1)
         local Object = setmetatable({
             Object = obj,
             PrimaryPart = Data.PrimaryPart or Data.primarypart or Data.pp or Data.PP or Data.primpart or Data.PrimPart or Data.PPart or Data.ppart or Data.pPart or Data.Ppart or obj:IsA("Model") and obj.PrimaryPart or obj:FindFirstChildOfClass("BasePart") or obj:IsA("BasePart") and obj or nil,
@@ -716,7 +717,7 @@ do -- ESP Functions
             self:GetObject(Instance):Destroy()
         end
         local Components = Object.Components
-        Components.Name = Framework:Draw("Text", {Text = Object.Name, Color = Color3.new(1, 1, 1), Font = 2, Size = 13, Outline = true, Center = true})
+        Components.Name = Framework:Draw("Text", {Text = Object.Name, Color = col, Font = 2, Size = 13, Outline = true, Center = true})
         Components.Addition = Framework:Draw("Text", {Text = Object.Addition.Text, Color = Object.Addition.Color, Font = 2, Size = 13, Outline = true, Center = true})
         self.Objects[Instance] = Object
         return Object
