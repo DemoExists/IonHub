@@ -664,7 +664,7 @@ do -- ESP Functions
             Name = (Data.Name ~= nil and Data.Name) or Instance.Name
         }, Object_Metatable)
         if Object.PrimaryPart == nil then
-            if Object:IsA("Model") then
+            if Instance:IsA("Model") then
                 return
             else
                 Object.PrimaryPart = Object
