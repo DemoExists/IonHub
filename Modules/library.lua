@@ -1798,12 +1798,14 @@ function library:init()
                 end)
 
                 utility:Connection(mousemove, function(pos)
-                    if draggingSat then
-                        updateSatVal(pos)
-                    elseif draggingHue then
-                        updateHue(pos)
-                    elseif draggingTrans then
-                        updateTrans(pos)
+                    if library.open then
+                        if draggingSat then
+                            updateSatVal(pos)
+                        elseif draggingHue then
+                            updateHue(pos)
+                        elseif draggingTrans then
+                            updateTrans(pos)
+                        end
                     end
                 end)
 
