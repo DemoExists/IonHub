@@ -1,8 +1,8 @@
 local Games = {
-    2862098693 = "Project Delta"
+    ["2862098693"] = "Project Delta"
 }
 
-local GameId = game.GameId
+local GameId = tostring(game.GameId)
 
 if Games[GameId] then
     Game = Games[GameId]
