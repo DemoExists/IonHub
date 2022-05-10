@@ -846,9 +846,6 @@ function library:init()
 
     utility:Connection(inputservice.InputBegan, function(input, gpe)
         if self.hasInit then
-            local hoverObj = utility:GetHoverObject();
-            local hoverObjData = library.drawings[hoverObj];
-
             if input.KeyCode == self.toggleKey and not library.opening then
                 self:SetOpen(not self.open)
                 task.spawn(function()
@@ -856,31 +853,35 @@ function library:init()
                     task.wait(.15);
                     library.opening = false;
                 end)
-            elseif input.UserInputType == Enum.UserInputType.MouseButton1 then
-                mb1down = true;
-                button1down:Fire()
-                if hoverObj and hoverObjData then
-                    hoverObjData.MouseButton1Down:Fire(inputservice:GetMouseLocation())
-                end
+            end
+            if library.open then
+                local hoverObj = utility:GetHoverObject();
+                local hoverObjData = library.drawings[hoverObj];
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    mb1down = true;
+                    button1down:Fire()
+                    if hoverObj and hoverObjData then
+                        hoverObjData.MouseButton1Down:Fire(inputservice:GetMouseLocation())
+                    end
 
-                -- // Update Sliders Click
-                if library.draggingSlider ~= nil then
-                    local rel = inputservice:GetMouseLocation() - library.draggingSlider.objects.background.Object.Position;
-                    local val = utility:ConvertNumberRange(rel.X, 0 , library.draggingSlider.objects.background.Object.Size.X, library.draggingSlider.min, library.draggingSlider.max);
-                    library.draggingSlider:SetValue(val)
-                end
+                    -- // Update Sliders Click
+                    if library.draggingSlider ~= nil then
+                        local rel = inputservice:GetMouseLocation() - library.draggingSlider.objects.background.Object.Position;
+                        local val = utility:ConvertNumberRange(rel.X, 0 , library.draggingSlider.objects.background.Object.Size.X, library.draggingSlider.min, library.draggingSlider.max);
+                        library.draggingSlider:SetValue(val)
+                    end
 
-            elseif input.UserInputType == Enum.UserInputType.MouseButton2 then
-                if hoverObj and hoverObjData then
-                    hoverObjData.MouseButton2Down:Fire(inputservice:GetMouseLocation())
+                elseif input.UserInputType == Enum.UserInputType.MouseButton2 then
+                    if hoverObj and hoverObjData then
+                        hoverObjData.MouseButton2Down:Fire(inputservice:GetMouseLocation())
+                    end
                 end
             end
-
         end
     end)
 
     utility:Connection(inputservice.InputEnded, function(input, gpe)
-        if self.hasInit then
+        if self.hasInit and library.open then
             local hoverObj = utility:GetHoverObject();
             local hoverObjData = library.drawings[hoverObj];
 
@@ -900,39 +901,39 @@ function library:init()
 
     utility:Connection(inputservice.InputChanged, function(input, gpe)
         if input.UserInputType == Enum.UserInputType.MouseMovement then
+            if library.open then
+                mousemove:Fire(inputservice:GetMouseLocation());
+                updateCursor();
 
-            mousemove:Fire(inputservice:GetMouseLocation());
-            updateCursor();
-
-            if library.CurrentTooltip ~= nil then
-                local mousePos = inputservice:GetMouseLocation()
-                tooltipObjects.background.Position = UDim2.new(0,mousePos.X + 15,0,mousePos.Y + 15)
-                tooltipObjects.background.Size = UDim2.new(0,tooltipObjects.text.TextBounds.X + 6 + (library.CurrentTooltip.risky and 60 or 0),0,tooltipObjects.text.TextBounds.Y + 2)
-            end
-
-            local hoverObj = utility:GetHoverObject();
-            for _,v in next, library.drawings do
-                local hover = hoverObj == v.Object;
-                if hover and not v.Hover then
-                    v.Hover = true;
-                    v.MouseEnter:Fire(inputservice:GetMouseLocation());
-                elseif not hover and v.Hover then
-                    v.Hover = false;
-                    v.MouseLeave:Fire(inputservice:GetMouseLocation());
-                end
-            end
-
-            if mb1down then
-
-                -- // Update Sliders Drag
-                if library.draggingSlider ~= nil then
-                    local rel = inputservice:GetMouseLocation() - library.draggingSlider.objects.background.Object.Position;
-                    local val = utility:ConvertNumberRange(rel.X, 0 , library.draggingSlider.objects.background.Object.Size.X, library.draggingSlider.min, library.draggingSlider.max);
-                    library.draggingSlider:SetValue(val)
+                if library.CurrentTooltip ~= nil then
+                    local mousePos = inputservice:GetMouseLocation()
+                    tooltipObjects.background.Position = UDim2.new(0,mousePos.X + 15,0,mousePos.Y + 15)
+                    tooltipObjects.background.Size = UDim2.new(0,tooltipObjects.text.TextBounds.X + 6 + (library.CurrentTooltip.risky and 60 or 0),0,tooltipObjects.text.TextBounds.Y + 2)
                 end
 
-            end
+                local hoverObj = utility:GetHoverObject();
+                for _,v in next, library.drawings do
+                    local hover = hoverObj == v.Object;
+                    if hover and not v.Hover then
+                        v.Hover = true;
+                        v.MouseEnter:Fire(inputservice:GetMouseLocation());
+                    elseif not hover and v.Hover then
+                        v.Hover = false;
+                        v.MouseLeave:Fire(inputservice:GetMouseLocation());
+                    end
+                end
 
+                if mb1down then
+
+                    -- // Update Sliders Drag
+                    if library.draggingSlider ~= nil then
+                        local rel = inputservice:GetMouseLocation() - library.draggingSlider.objects.background.Object.Position;
+                        local val = utility:ConvertNumberRange(rel.X, 0 , library.draggingSlider.objects.background.Object.Size.X, library.draggingSlider.min, library.draggingSlider.max);
+                        library.draggingSlider:SetValue(val)
+                    end
+
+                end
+            end
         end
     end)
     
