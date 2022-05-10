@@ -664,7 +664,6 @@ do -- ESP Functions
             }
         end
         local Object = setmetatable({
-            Object = Data.Object or Data.object or Data.Obj or Data.obj or self:Get_Character(Instance),
             Player = Data.Player or Data.player or Data.Plr or Data.plr or Data.Ply or Data.ply or Instance,
             Components = {},
             Type = "Player"
