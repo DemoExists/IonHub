@@ -313,7 +313,7 @@ do -- Player Metatable
 
                 if ESP.Settings.Enabled and On_Screen and Meter_Distance < ESP.Settings.Maximal_Distance and Good then
                     local Highlight_Settings = ESP.Settings.Highlight
-                    local Is_Highlighted = Highlight_Settings.Enabled and Highlight_Settings.Target == self.Object or false
+                    local Is_Highlighted = Highlight_Settings.Enabled and Highlight_Settings.Target == Character or false
                     local Highlight_Color = Highlight_Settings.Color
 
                     -- Offsets
@@ -660,7 +660,6 @@ do -- ESP Functions
         end
         if Data == nil or type(Data) ~= "table" then
             Data = {
-                Object = self:Get_Character(Instance),
                 Player = Instance
             }
         end
