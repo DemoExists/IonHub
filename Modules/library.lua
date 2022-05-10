@@ -847,6 +847,10 @@ function library:init()
     utility:Connection(inputservice.InputBegan, function(input, gpe)
         if self.hasInit then
             if input.KeyCode == self.toggleKey and not library.opening then
+                if library.open == true then
+                    library.CurrentTooltip = nil;
+                    tooltipObjects.background.Visible = false
+                end
                 self:SetOpen(not self.open)
                 task.spawn(function()
                     library.opening = true;
