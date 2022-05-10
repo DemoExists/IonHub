@@ -664,7 +664,7 @@ do -- ESP Functions
             Name = (Data.Name ~= nil and Data.Name) or Instance.Name
         }, Object_Metatable)
         if Object.PrimaryPart == nil then
-            return warn("error: function ESP.Object Object.PrimaryPart is nil")
+            return
         end
         if self:GetObject(Instance) then
             self:GetObject(Instance):Destroy()
