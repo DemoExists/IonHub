@@ -2,6 +2,7 @@
 
     Library Made for https://octohook.xyz/
     Developed by liam#4567
+    Modified by tatar0071#0627
 
     Ik this code is really shit in some places lol
     will rewrite again i was just using some rly old stuff that i was lazy to rewrite
@@ -848,8 +849,12 @@ function library:init()
         if self.hasInit then
             if input.KeyCode == self.toggleKey and not library.opening then
                 if library.open == true then
-                    library.CurrentTooltip = nil;
-                    tooltipObjects.background.Visible = false
+                    print('tooltip hide')
+                    task.spawn(function()
+                        task.wait()
+                        library.CurrentTooltip = nil;
+                        tooltipObjects.background.Visible = false
+                    end)
                 end
                 self:SetOpen(not self.open)
                 task.spawn(function()
