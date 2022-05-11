@@ -850,7 +850,7 @@ function library:init()
             if input.KeyCode == self.toggleKey and not library.opening then
                 task.spawn(function()
                     task.wait()
-                    print('tooltip hide')
+                    print('tooltip hide', self.open)
                     library.CurrentTooltip = nil;
                     tooltipObjects.background.Visible = false
                 end)
