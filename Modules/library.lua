@@ -848,14 +848,12 @@ function library:init()
     utility:Connection(inputservice.InputBegan, function(input, gpe)
         if self.hasInit then
             if input.KeyCode == self.toggleKey and not library.opening then
-                if library.open == true then
+                task.spawn(function()
+                    task.wait()
                     print('tooltip hide')
-                    task.spawn(function()
-                        task.wait()
-                        library.CurrentTooltip = nil;
-                        tooltipObjects.background.Visible = false
-                    end)
-                end
+                    library.CurrentTooltip = nil;
+                    tooltipObjects.background.Visible = false
+                end)
                 self:SetOpen(not self.open)
                 task.spawn(function()
                     library.opening = true;
