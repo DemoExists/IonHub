@@ -966,7 +966,9 @@ function library:init()
         updateCursor();
         for _,window in next, self.windows do
             window:SetOpen(bool);
-         end
+        end
+        library.CurrentTooltip = nil;
+        tooltipObjects.background.Visible = false
     end
 
     function self.UpdateThemeColors()
@@ -2032,8 +2034,9 @@ function library:init()
                         end)
                     end
                 end
-
             end
+            library.CurrentTooltip = nil;
+            tooltipObjects.background.Visible = false
         end
 
         function window:AddTab(text, order)
@@ -4618,6 +4621,8 @@ function library:init()
         end
 
         window:SetOpen(true);
+        library.CurrentTooltip = nil;
+        tooltipObjects.background.Visible = false
         return window;
     end
 
