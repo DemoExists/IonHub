@@ -321,71 +321,6 @@ do
         return c
     end
 
-    function utility:CloneTable(t)
-        local clone = {}
-        for i,v in next, t do
-            clone[i] = v;
-        end
-        return clone
-    end
-
-    function utility:SetProperties(t, props)
-        for i,v in next, props do
-            t[i] = v;
-        end
-        return t
-    end
-
-    function utility:CFrameToViewport(cf)
-        local cam = workspace.CurrentCamera;
-        return cam:WorldToViewportPoint((cf * (cf - cf.p):ToObjectSpace(cam.CFrame - cam.CFrame.p)).p);
-    end
-
-    function utility:HasCharacter(plr, minhealth)
-        if plr.Character ~= nil and plr.Character:FindFirstChild('HumanoidRootPart') and plr.Character:FindFirstChild('Humanoid') and plr.Character.Humanoid.Health > (minhealth or 0) then
-            return true, plr.Character;
-        end
-        return false;
-    end
-
-    function utility:Raycast(a,b,c)
-        c = typeof(c) == 'table' and c or {}
-        local params = RaycastParams.new();
-        params.IgnoreWater = true;
-        params.FilterType = Enum.RaycastFilterType.Blacklist;
-        params.FilterDescendantsInstances = c;
-    
-        local ray = workspace:Raycast(a,b,params);
-        if ray ~= nil then -- it was erroring without 2 if statements lol idk why
-            if ray.Instance.Transparency >= .25 or not ray.Instance.CanCollide then
-                table.insert(c, ray.Instance);
-                local newray = self:Raycast(a,b,c)
-                if newray ~= nil then
-                    ray = newray
-                end
-            end
-        end
-        return ray
-    end
-
-    function utility:EnableConnections(connection, ignoresynapse)
-        for i,v in next, getconnections(connection) do
-            if v.Function ~= nil and ignoresynapse and isexecutorclosure(v.Function) then
-                return
-            end
-            v:Enable()
-        end
-    end
-
-    function utility:DisableConnections(connection, ignoresynapse)
-        for i,v in next, getconnections(connection) do
-            if v.Function ~= nil and ignoresynapse and isexecutorclosure(v.Function) then
-                return
-            end
-            v:Disable()
-        end
-    end
-
     function utility:Instance(class, properties)
         local inst = newInstance(class)
         for prop, val in next, properties or {} do
@@ -396,22 +331,11 @@ do
                 printconsole(e, 255,0,0)
             end
         end
-        table.insert(library.instances, inst);
         return inst
     end
 
     function utility:HasProperty(obj, prop)
         return ({(pcall(function() local a = obj[prop] end))})[1]
-    end
-
-    function utility:CheckEnum(enum,enumitem)
-        if typeof(enumitem) == 'EnumItem' then
-            return ({pcall(function()
-                local a = enum[enumitem.Name]
-            end)})[1]
-        else
-            return false
-        end
     end
 
     function utility:ToRGB(c3)
@@ -435,21 +359,8 @@ do
         return newVector2(x,y)
     end
 
-    function utility:Vector2ToUDim2(a,b)
-        local x,y
-        x = self:ConvertNumberRange(a.X, 0, b.X, 0, 1)
-        y = self:ConvertNumberRange(a.Y, 0, b.Y, 0, 1)
-        return newUDim2(x,0,y,0)
-    end
-
     function utility:Lerp(a,b,c)
         return a + (b-a) * c
-    end
-
-    function utility:Bezier(p1,p2,p3,t)
-        local a = self:Lerp(p1, p2, t);
-        local b = self:Lerp(p2, p3, t);
-        return self:Lerp(a, b, t)
     end
 
     function utility:Tween(obj, prop, val, time, direction, style)
@@ -836,13 +747,6 @@ function library:init()
 
     utility:Connection(library.unloaded, function()
         screenGui:Destroy()
-    end)
-
-    local namecall; namecall = hookmetamethod(game, '__namecall', function(obj, ...)
-        if getnamecallmethod() == 'Destroy' and library.instances[obj] ~= nil then
-            library.instances[obj] = nil;
-        end
-        return namecall(obj, ...)
     end)
 
     utility:Connection(inputservice.InputBegan, function(input, gpe)
