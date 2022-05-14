@@ -847,7 +847,7 @@ function library:init()
 
     utility:Connection(inputservice.InputBegan, function(input, gpe)
         if self.hasInit then
-            if input.KeyCode == self.toggleKey and not library.opening then
+            if input.KeyCode == self.toggleKey and not library.opening and not gpe then
                 self:SetOpen(not self.open)
                 task.spawn(function()
                     library.opening = true;
