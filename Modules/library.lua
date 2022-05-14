@@ -848,19 +848,11 @@ function library:init()
     utility:Connection(inputservice.InputBegan, function(input, gpe)
         if self.hasInit then
             if input.KeyCode == self.toggleKey and not library.opening then
-                library.CurrentTooltip = nil;
-                tooltipObjects.background.Visible = false
                 self:SetOpen(not self.open)
-                library.CurrentTooltip = nil;
-                tooltipObjects.background.Visible = false
                 task.spawn(function()
-                    library.CurrentTooltip = nil;
-                    tooltipObjects.background.Visible = false
                     library.opening = true;
                     task.wait(.15);
                     library.opening = false;
-                    library.CurrentTooltip = nil;
-                    tooltipObjects.background.Visible = false
                 end)
             end
             if library.open then
@@ -967,6 +959,7 @@ function library:init()
         for _,window in next, self.windows do
             window:SetOpen(bool);
         end
+
         library.CurrentTooltip = nil;
         tooltipObjects.background.Visible = false
     end
@@ -2035,8 +2028,6 @@ function library:init()
                     end
                 end
             end
-            library.CurrentTooltip = nil;
-            tooltipObjects.background.Visible = false
         end
 
         function window:AddTab(text, order)
@@ -4621,8 +4612,6 @@ function library:init()
         end
 
         window:SetOpen(true);
-        library.CurrentTooltip = nil;
-        tooltipObjects.background.Visible = false
         return window;
     end
 
