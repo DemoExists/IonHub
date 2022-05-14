@@ -2340,12 +2340,15 @@ function library:init()
 
                         local x, y = 0, 0
                         for i,option in next, self.options do
-                            if option.class == 'color' or option.class == 'bind' then
-                                option.objects.holder.Position = newUDim2(1,-option.objects.holder.Object.Size.X-x,0,0);
-                                x = x + option.objects.holder.Object.Size.X;
-                            elseif option.class == 'slider' or option.class == 'list' then
-                                option.objects.holder.Position = newUDim2(0,0,1,-option.objects.holder.Object.Size.Y-y);
-                                y = y + option.objects.holder.Object.Size.Y;
+                            option.objects.holder.Visible = option.enabled
+                            if option.enabled then
+                                if option.class == 'color' or option.class == 'bind' then
+                                    option.objects.holder.Position = newUDim2(1,-option.objects.holder.Object.Size.X-x,0,0);
+                                    x = x + option.objects.holder.Object.Size.X;
+                                elseif option.class == 'slider' or option.class == 'list' then
+                                    option.objects.holder.Position = newUDim2(0,0,1,-option.objects.holder.Object.Size.Y-y);
+                                    y = y + option.objects.holder.Object.Size.Y;
+                                end
                             end
                         end
 
