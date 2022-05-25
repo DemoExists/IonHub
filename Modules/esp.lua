@@ -95,8 +95,10 @@ local ESP; ESP = {
         Maximal_Distance = 1000,
         Object_Maximal_Distance = 1000,
         Highlight = {Enabled = false, Color = Color3.new(1, 0, 0), Target = ""},
+
         Box = {Enabled = false, Color = Color3.new(1, 1, 1), Transparency = 0},
         Box_Outline = {Enabled = false, Color = Color3.new(0, 0, 0), Transparency = 0, Outline_Size = 1},
+        Box_Fill = {Enabled = false, Color = Color3.new(1, 1, 1), Transparency = 0},
         Healthbar = {Enabled = false, Position = "Left", Color = Color3.new(1, 1, 1), Color_Lerp = Color3.fromRGB(40, 252, 3)},
         Name = {Enabled = false, Position = "Top", Color = Color3.new(1, 1, 1), Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
         Distance = {Enabled = false, Position = "Bottom", Color = Color3.new(1, 1, 1), Transparency = 0, OutlineColor = Color3.new(0, 0, 0)},
@@ -240,7 +242,7 @@ do -- Player Metatable
         ESP.Objects[self.Player] = nil
     end
     function Player_Metatable:Update()
-        local Box, Box_Outline = self.Components.Box, self.Components.Box_Outline
+        local Box, Box_Outline, Box_Fill = self.Components.Box, self.Components.Box_Outline, self.Components.Box_Fill
         local Healthbar, Healthbar_Outline = self.Components.Healthbar, self.Components.Healthbar_Outline
         local Name, NameBold = self.Components.Name, self.Components.NameBold
         local Distance, DistanceBold = self.Components.Distance, self.Components.DistanceBold
@@ -248,7 +250,7 @@ do -- Player Metatable
         local Health, HealthBold = self.Components.Health, self.Components.HealthBold
         local Chams = _G.chamsEnabled == true and self.Components.Chams or true
         local Image = self.Components.Image
-        if Box == nil or Box_Outline == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or NameBold == nil or Distance == nil or DistanceBold == nil or Tool == nil or ToolBold == nil or Health == nil or HealthBold == nil or Chams == nil then
+        if Box == nil or Box_Outline == nil or Box_Fill == nil or Healthbar == nil or Healthbar_Outline == nil or Name == nil or NameBold == nil or Distance == nil or DistanceBold == nil or Tool == nil or ToolBold == nil or Health == nil or HealthBold == nil or Chams == nil then
             self:Destroy()
         end
         local Character = ESP:Get_Character(self.Player)
@@ -257,6 +259,7 @@ do -- Player Metatable
             if not Humanoid then
                 Box.Visible = false
                 Box_Outline.Visible = false
+                Box_Fill.Visible = false
                 Healthbar.Visible = false
                 Healthbar_Outline.Visible = false
                 Name.Visible = false
@@ -337,6 +340,14 @@ do -- Player Metatable
                     Box_Outline.Thickness = Box_Outline_Settings.Outline_Size + 2
                     Box_Outline.Transparency = Framework:Drawing_Transparency(Box_Outline_Settings.Transparency)
                     Box_Outline.Visible = Box_Settings.Enabled and Box_Outline_Settings.Enabled or false
+
+                    local Box_Fill_Settings = ESP.Settings.Box_Fill
+                    Box_Fill.Size = Box_Size
+                    Box_Fill.Position = Box_Position
+                    Box_Fill.Color = Box_Fill_Settings.Color
+                    Box_Fill.Transparency = Framework:Drawing_Transparency(Box_Fill_Settings.Transparency)
+                    Box_Fill.Visible = Box_Settings.Enabled and Box_Fill_Settings.Enabled or false
+                    Box_Fill.Filled = true;
 
                     local Image_Settings = ESP.Settings.Image
                     local Image_Enabled = Image_Settings.Enabled
@@ -552,6 +563,7 @@ do -- Player Metatable
                 else
                     Box.Visible = false
                     Box_Outline.Visible = false
+                    Box_Fill.Visible = false
                     Healthbar.Visible = false
                     Healthbar_Outline.Visible = false
                     Name.Visible = false
@@ -571,6 +583,7 @@ do -- Player Metatable
             else
                 Box.Visible = false
                 Box_Outline.Visible = false
+                Box_Fill.Visible = false
                 Healthbar.Visible = false
                 Healthbar_Outline.Visible = false
                 Name.Visible = false
@@ -590,6 +603,7 @@ do -- Player Metatable
         else
             Box.Visible = false
             Box_Outline.Visible = false
+            Box_Fill.Visible = false
             Healthbar.Visible = false
             Healthbar_Outline.Visible = false
             Name.Visible = false
@@ -672,8 +686,9 @@ do -- ESP Functions
             self:GetObject(Instance):Destroy()
         end
         local Components = Object.Components
-        Components.Box = Framework:Draw("Square", {Thickness = 1, ZIndex = 2})
-        Components.Box_Outline = Framework:Draw("Square", {Thickness = 3, ZIndex = 1})
+        Components.Box = Framework:Draw("Square", {Thickness = 1, ZIndex = 3})
+        Components.Box_Fill = Framework:Draw("Square", {Thickness = 1, ZIndex = 1});
+        Components.Box_Outline = Framework:Draw("Square", {Thickness = 3, ZIndex = 2})
         Components.Healthbar = Framework:Draw("Square", {Thickness = 1, ZIndex = 2, Filled = true})
         Components.Healthbar_Outline = Framework:Draw("Square", {Thickness = 3, ZIndex = 1, Filled = true})
         Components.Name = Framework:Draw("Text", {Text = Instance.Name, Font = 2, Size = 13, Outline = true, Center = true})
